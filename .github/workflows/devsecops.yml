@@ -1,13 +1,17 @@
-name: DevSecOps CI
+name: Build Docker Image
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v3
-      - name: Run a simple step
-        run: echo "Hello DevSecOps"
+    - name: Checkout repo
+      uses: actions/checkout@v3
+
+    - name: Build Docker image
+      run: docker build -t juice-shop:latest .
