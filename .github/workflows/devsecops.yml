@@ -1,7 +1,10 @@
-name: Build Docker Image
+name: DevSecOps CI
 
 on:
   push:
+    branches:
+      - main
+  pull_request:
     branches:
       - main
 
@@ -10,8 +13,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repo
-      uses: actions/checkout@v3
+      - name: Checkout repo
+        uses: actions/checkout@v3
 
-    - name: Build Docker image
-      run: docker build -t juice-shop:latest .
+      - name: Build Docker image
+        run: docker build -t juice-shop:latest ./juice-shop
+
+      - name: Test Docker image
+        run: docker run --rm juice-shop:latest node --version
